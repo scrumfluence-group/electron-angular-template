@@ -1,6 +1,4 @@
 
-const path = require('path');
-const appName = path.basename(path.dirname(require.main.filename));
 const { app, BrowserWindow } = require('electron');
 let win;
 
@@ -10,10 +8,10 @@ function createWindow() {
         width: 600,
         height: 600,
         backgroundColor: '#ffffff',
-        icon: `file://${__dirname}/dist/${appName}/assets/logo.png`
+        icon: `file://${__dirname}/dist/assets/logo.png`
     });
 
-    win.loadURL(`file://${__dirname}/dist/${appName}/index.html`);
+    win.loadURL(`file://${__dirname}/dist/index.html`);
 
     win.on('closed', () => {
         win = null;
