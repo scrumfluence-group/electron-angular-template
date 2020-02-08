@@ -21,7 +21,7 @@ This project was initially generated with [Angular CLI](https://github.com/angul
 
 ## Running Angular
 
-- Angular locally run at: http://localhost:4200/
+- Angular locally runs at: http://localhost:4200/
 - Run angular locally (must be accessed through the browser): `npm run start`
 - Run angular with electron: `npm run electron-build`
 - Compile the electron app for windows: `electron-packager . --platform=win32`
@@ -46,12 +46,47 @@ You must have the following installed on your machine:
     - Note: Make sure your in the directory where you want the project folder to be created.
 - Open the new project in VsCode.
 - From VsCode terminal run: `npm install electron --save-dev`
+- From VsCode terminal run: `npm install electron-reload --save-dev`
+- From VsCode terminal run: `npm install electron-packager --save-dev`
 - Create the new JavaScript file: `main.js`
-- Insert the following code into the file: `main.js`
+- Insert the code (from `Code` section at the bottom of this file) into the file: `main.js`
+- Open the file: `src > index.html`
+- Find the following tag in the HTML: `html > head > base`
+    - Replace the `href` attribute value `/` with `./`
+- Open the file: `package.json`
+- Under the `version` key add: `"main": "main.js",`
+- Within the `scripts` key and under the `e2e` key add the following keys: 
+    ```
+    "electron": "ng build --prod && electron .",
+    "electron-dev": "electron . mode=develop"
+    ```
+    - Make sure to put a comma after: `"e2e": "ng e2e",`
+- Open the file: `angular.json`
+- Traverse the JSON structure as follows: `projects > test > architect > build > options > outputPath`
+- Replace the `outputPath` key's value `"dist/test"` with: `"dist"`
+- From VsCode terminal run: `npm run electron`
+- To run electron in develop mode with hot loading run the following commands in 2 separate terminals:
+    - In the 1st terminal run: `ng serve`
+    - Wait until you see the ***Compiled successfully.*** message.
+    - In the 2nd terminal run: `npm run electron-dev`
+    
+---
 
-```
+## Code
+
+```javascript
 const { app, BrowserWindow } = require('electron');
 let win;
+let settings = {
+    mode: 'production'
+};
+
+process.argv.forEach(argument => {
+
+    if (!argument.includes('=')) { return; }
+    let values = argument.split('=');
+    settings[values[0]] = values[1];
+});
 
 function createWindow() {
 
@@ -62,7 +97,11 @@ function createWindow() {
         icon: `file://${__dirname}/dist/assets/logo.png`
     });
 
-    win.loadURL(`file://${__dirname}/dist/index.html`);
+    if (settings.mode === 'production') {
+        win.loadURL(`file://${__dirname}/dist/index.html`);
+    } else {
+        win.loadURL(`http://localhost:4200/index.html`);
+    }
 
     win.on('closed', () => {
         win = null;
@@ -84,18 +123,10 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
+if (settings.mode !== 'production') {
+    require('electron-reload')(__dirname, {
+        electron: require(`${__dirname}/node_modules/electron`)
+    });
+}
 ```
-
----
-
-- Open the file: `src > index.html`
-- Find the following tag in the HTML: `html > head > base`
-    - Replace the `href` attribute value `/` with `./`
-- Open the file: `package.json`
-- Under the `version` key add: `"main": "main.js",`
-- Within the `scripts` key and under the `e2e` key add: `"electron-build": "ng build --prod && electron ."`
-    - Make sure to put a comma after: `"e2e": "ng e2e",`
-- Open the file: `angular.json`
-- Traverse the JSON structure as follows: `projects > test > architect > build > options > outputPath`
-- Replace the `outputPath` key's value `"dist/test"` with: `"dist"`
-- From VsCode terminal run: `npm run electron-build`

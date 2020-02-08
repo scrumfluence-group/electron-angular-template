@@ -1,6 +1,15 @@
-
 const { app, BrowserWindow } = require('electron');
 let win;
+let settings = {
+    mode: 'production'
+};
+
+process.argv.forEach(argument => {
+
+    if (!argument.includes('=')) { return; }
+    let values = argument.split('=');
+    settings[values[0]] = values[1];
+});
 
 function createWindow() {
 
@@ -11,7 +20,11 @@ function createWindow() {
         icon: `file://${__dirname}/dist/assets/logo.png`
     });
 
-    win.loadURL(`file://${__dirname}/dist/index.html`);
+    if (settings.mode === 'production') {
+        win.loadURL(`file://${__dirname}/dist/index.html`);
+    } else {
+        win.loadURL(`http://localhost:4200/index.html`);
+    }
 
     win.on('closed', () => {
         win = null;
@@ -33,3 +46,9 @@ app.on('activate', () => {
         createWindow();
     }
 });
+
+if (settings.mode !== 'production') {
+    require('electron-reload')(__dirname, {
+        electron: require(`${__dirname}/node_modules/electron`)
+    });
+}
