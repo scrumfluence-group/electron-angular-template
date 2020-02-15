@@ -43,6 +43,6 @@ testem.log
 
 # System Files
 /sandbox
-/electron-angular-template-win32-x64
+/electron-angular-template*
 .DS_Store
 Thumbs.db
