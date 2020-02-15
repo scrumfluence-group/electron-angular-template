@@ -62,8 +62,8 @@ You must have the following installed on your machine:
     ```
     - Make sure to put a comma after: `"e2e": "ng e2e",`
 - Open the file: `angular.json`
-- Traverse the JSON structure as follows: `projects > test > architect > build > options > outputPath`
-- Replace the `outputPath` key's value `"dist/test"` with: `"dist"`
+- Traverse the JSON structure as follows: `projects > PROJECT-NAME > architect > build > options > outputPath`
+- Replace the `outputPath` key's value `"dist/PROJECT-NAME"` with: `"dist"`
 - From VsCode terminal run: `npm run electron`
 - To run electron in develop mode with hot loading run the following commands in 2 separate terminals:
     - In the 1st terminal run: `ng serve`
