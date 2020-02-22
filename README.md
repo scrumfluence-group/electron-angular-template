@@ -29,6 +29,17 @@ This project was initially generated with [Angular CLI](https://github.com/angul
 
 ---
 
+## Quick Commands
+
+- Create a new component: `ng g c {NAME}`
+- Create a new service: `ng g s {NAME}`
+    - Note: Replace `{NAME}` with the name of the new component or service (lowercase).
+    - `g` is short for `generate`
+    - `c` is short for `component`
+    - `s` is short for `service`
+
+---
+
 ## Primary Project Dependencies
 
 You must have the following installed on your machine:
@@ -41,8 +52,8 @@ You must have the following installed on your machine:
 
 - Open command prompt or a terminal.
 - Install angular: `npm install -g @angular/cli`
-- Start a new angular & electron project: `ng new PROJECT-NAME`
-    - Note: Replace ***PROJECT-NAME*** with the name of your new angular project.
+- Start a new angular project: `ng new {PROJECT-NAME}`
+    - Note: Replace ***{PROJECT-NAME}*** with the name of your new angular project.
     - Note: Make sure your in the directory where you want the project folder to be created.
 - Open the new project in VsCode.
 - From VsCode terminal run: `npm install electron --save-dev`
@@ -62,8 +73,8 @@ You must have the following installed on your machine:
     ```
     - Make sure to put a comma after: `"e2e": "ng e2e",`
 - Open the file: `angular.json`
-- Traverse the JSON structure as follows: `projects > PROJECT-NAME > architect > build > options > outputPath`
-- Replace the `outputPath` key's value `"dist/PROJECT-NAME"` with: `"dist"`
+- Traverse the JSON structure as follows: `projects > {PROJECT-NAME} > architect > build > options > outputPath`
+- Replace the `outputPath` key's value `"dist/{PROJECT-NAME}"` with: `"dist"`
 - From VsCode terminal run: `npm run electron`
 - To run electron in develop mode with hot loading run the following commands in 2 separate terminals:
     - In the 1st terminal run: `ng serve`
